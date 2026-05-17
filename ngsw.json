@@ -1,0 +1,76 @@
+{
+  "configVersion": 1,
+  "timestamp": 1779059256056,
+  "index": "/peliculas/index.csr.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/peliculas/favicon.ico",
+        "/peliculas/main-5ZVHZ2ZX.js",
+        "/peliculas/manifest.webmanifest",
+        "/peliculas/styles-OMGDTNZM.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/peliculas/icons/icon.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "omdb-api",
+      "patterns": [
+        "https:\\/\\/www\\.omdbapi\\.com\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 50,
+      "maxAge": 86400000,
+      "timeoutMs": 8000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/peliculas/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/peliculas/icons/icon.svg": "27e5c0a8483f8793d9c9fb3cdaa90b8194d9b812",
+    "/peliculas/main-5ZVHZ2ZX.js": "57bd2fd825272e6d746328871ee37e33d81f9b7d",
+    "/peliculas/manifest.webmanifest": "cf860fa1d11ca2a8dfddc9a95b3ab0b5ff4e75c3",
+    "/peliculas/styles-OMGDTNZM.css": "8a934e2c9ab6c93b8b37d6dfddee822e0adacbf7"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
