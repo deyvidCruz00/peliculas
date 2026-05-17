@@ -1,7 +1,7 @@
 {
   "configVersion": 1,
-  "timestamp": 1779059256056,
-  "index": "/peliculas/index.csr.html",
+  "timestamp": 1779060242819,
+  "index": "/peliculas/index.html",
   "assetGroups": [
     {
       "name": "app",
@@ -12,6 +12,7 @@
       },
       "urls": [
         "/peliculas/favicon.ico",
+        "/peliculas/index.html",
         "/peliculas/main-5ZVHZ2ZX.js",
         "/peliculas/manifest.webmanifest",
         "/peliculas/styles-OMGDTNZM.css"
@@ -50,6 +51,7 @@
   "hashTable": {
     "/peliculas/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/peliculas/icons/icon.svg": "27e5c0a8483f8793d9c9fb3cdaa90b8194d9b812",
+    "/peliculas/index.html": "ac60d80ffffc98dd26a8a8f4736f073bda811249",
     "/peliculas/main-5ZVHZ2ZX.js": "57bd2fd825272e6d746328871ee37e33d81f9b7d",
     "/peliculas/manifest.webmanifest": "cf860fa1d11ca2a8dfddc9a95b3ab0b5ff4e75c3",
     "/peliculas/styles-OMGDTNZM.css": "8a934e2c9ab6c93b8b37d6dfddee822e0adacbf7"
