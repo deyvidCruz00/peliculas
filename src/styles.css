@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+	color-scheme: light;
+}
+
+body {
+	margin: 0;
+	font-family: 'Fira Sans', sans-serif;
+	background: radial-gradient(circle at top left, #fff7ed, #eaf0ff 45%, #f5f7ff 100%);
+	min-height: 100vh;
+}
+
+.app-shell {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 1.5rem 3rem;
+}
+
+.app-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin: 1.5rem 0 2rem;
+	padding: 1.25rem 1.5rem;
+	border-radius: 18px;
+	background: #0f172a;
+	color: #f8fafc;
+	box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
+}
+
+.app-title__name {
+	display: block;
+	font-family: 'Playfair Display', serif;
+	font-size: 1.7rem;
+	letter-spacing: 0.02em;
+}
+
+.app-title__tag {
+	display: block;
+	font-size: 0.95rem;
+	color: #fbbf24;
+}
+
+.app-nav {
+	display: flex;
+	gap: 0.75rem;
+}
+
+.app-nav a {
+	text-decoration: none;
+	padding: 0.4rem 0.95rem;
+	border-radius: 999px;
+	color: #e2e8f0;
+	background: rgba(148, 163, 184, 0.18);
+	transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.app-nav a.active,
+.app-nav a:hover {
+	background: #fbbf24;
+	color: #0f172a;
+	transform: translateY(-1px);
+}

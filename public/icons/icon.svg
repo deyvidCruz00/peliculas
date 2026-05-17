@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0f172a" rx="100" ry="100"/>
+  <path fill="#f59e0b" d="M336 176h-64v-64h-32v64h-64v32h64v64h32v-64h64z"/>
+  <text x="50%" y="380" font-size="100" font-family="sans-serif" font-weight="bold" fill="white" text-anchor="middle">MK</text>
+</svg>

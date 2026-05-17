@@ -1,0 +1,116 @@
+<section class="peliculas">
+  <div class="peliculas__intro">
+    <h1>Explorador de Peliculas</h1>
+    <p>Busca tus titulos favoritos y guarda tu coleccion local con notas y calificaciones.</p>
+  </div>
+
+  <form class="peliculas__form" (ngSubmit)="buscar()">
+    <div class="form-group">
+      <label for="title">Titulo</label>
+      <input id="title" name="title" class="form-control" [(ngModel)]="search.title" placeholder="Ej: The Matrix">
+    </div>
+    <div class="form-group">
+      <label for="year">Ano</label>
+      <input id="year" name="year" class="form-control" [(ngModel)]="search.year" placeholder="Ej: 1999">
+    </div>
+    <div class="form-group">
+      <label for="type">Tipo</label>
+      <select id="type" name="type" class="form-select" [(ngModel)]="search.type">
+        <option value="">Todos</option>
+        <option value="movie">Pelicula</option>
+        <option value="series">Serie</option>
+        <option value="episode">Episodio</option>
+      </select>
+    </div>
+    <button class="btn btn-warning" type="submit" [disabled]="isLoading">Buscar</button>
+  </form>
+
+  <div *ngIf="error" class="alert alert-warning">{{ error }}</div>
+
+  <section class="peliculas__results">
+    <h2>Resultados</h2>
+    <div *ngIf="isLoading" class="peliculas__loading">Buscando...</div>
+    <div class="table-responsive" *ngIf="resultados.length > 0">
+      <table class="table table-striped align-middle">
+        <thead>
+          <tr>
+            <th>Poster</th>
+            <th>Titulo</th>
+            <th>Ano</th>
+            <th>Tipo</th>
+            <th>Guardar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pelicula of resultados">
+            <td>
+              <img [src]="pelicula.Poster !== 'N/A' ? pelicula.Poster : 'https://via.placeholder.com/70x100?text=No+Poster'" alt="Poster" class="peliculas__poster">
+            </td>
+            <td>{{ pelicula.Title }}</td>
+            <td>{{ pelicula.Year }}</td>
+            <td>{{ pelicula.Type }}</td>
+            <td>
+              <button class="btn btn-outline-dark btn-sm" [disabled]="estaGuardada(pelicula.imdbID)" (click)="guardar(pelicula)">
+                {{ estaGuardada(pelicula.imdbID) ? 'Guardada' : 'Guardar' }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="peliculas__local">
+    <h2>Mi Coleccion Local</h2>
+    <div class="table-responsive" *ngIf="guardadas.length > 0; else empty">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>Titulo</th>
+            <th>Nota</th>
+            <th>Rating</th>
+            <th>Guardado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let guardada of guardadas">
+            <td>
+              <div class="peliculas__local-title">
+                <img [src]="guardada.poster !== 'N/A' ? guardada.poster : 'https://via.placeholder.com/48x68?text=No+Poster'" alt="Poster" class="peliculas__poster-sm">
+                <div>
+                  <strong>{{ guardada.title }}</strong>
+                  <div class="text-muted">{{ guardada.year }} · {{ guardada.type }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <textarea *ngIf="editingId === guardada.imdbID" class="form-control" rows="2" [(ngModel)]="guardada.note" name="note-{{ guardada.imdbID }}"></textarea>
+              <span *ngIf="editingId !== guardada.imdbID">{{ guardada.note || 'Sin nota' }}</span>
+            </td>
+            <td>
+              <select *ngIf="editingId === guardada.imdbID" class="form-select" [(ngModel)]="guardada.rating" name="rating-{{ guardada.imdbID }}">
+                <option [ngValue]="1">1</option>
+                <option [ngValue]="2">2</option>
+                <option [ngValue]="3">3</option>
+                <option [ngValue]="4">4</option>
+                <option [ngValue]="5">5</option>
+              </select>
+              <span *ngIf="editingId !== guardada.imdbID">{{ guardada.rating }}/5</span>
+            </td>
+            <td>{{ guardada.savedAt | date: 'short' }}</td>
+            <td class="peliculas__actions">
+              <button *ngIf="editingId !== guardada.imdbID" class="btn btn-sm btn-outline-primary" (click)="iniciarEdicion(guardada.imdbID)">Editar</button>
+              <button *ngIf="editingId === guardada.imdbID" class="btn btn-sm btn-success" (click)="actualizar(guardada)">Guardar</button>
+              <button *ngIf="editingId === guardada.imdbID" class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="eliminar(guardada.imdbID)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #empty>
+      <div class="alert alert-info">Aun no tienes peliculas guardadas.</div>
+    </ng-template>
+  </section>
+</section>
