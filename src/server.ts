@@ -64,20 +64,19 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
       cert: readFileSync(sslCertPath)
     };
 
-    https.createServer(options, app).listen(port, (error) => {
-      if (error) {
-        throw error;
-      }
-
+    const server = https.createServer(options, app);
+    server.on('error', (error) => {
+      throw error;
+    });
+    server.listen(port, () => {
       console.log(`Node Express server listening on https://localhost:${port}`);
     });
   } else {
-    app.listen(port, (error) => {
-      if (error) {
-        throw error;
-      }
-
+    const server = app.listen(port, () => {
       console.log(`Node Express server listening on http://localhost:${port}`);
+    });
+    server.on('error', (error) => {
+      throw error;
     });
   }
 }
