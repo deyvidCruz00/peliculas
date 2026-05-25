@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1779730254683,
+  "timestamp": 1779730810949,
   "index": "https://deyvidCruz00.github.io/peliculas/index.csr.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "https://deyvidCruz00.github.io/peliculas/favicon.ico",
-        "https://deyvidCruz00.github.io/peliculas/main-FPBEAL4O.js",
+        "https://deyvidCruz00.github.io/peliculas/main-BZD7G2HF.js",
         "https://deyvidCruz00.github.io/peliculas/manifest.webmanifest",
         "https://deyvidCruz00.github.io/peliculas/styles-OMGDTNZM.css"
       ],
@@ -50,7 +50,7 @@
   "hashTable": {
     "https://deyvidCruz00.github.io/peliculas/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "https://deyvidCruz00.github.io/peliculas/icons/icon.svg": "27e5c0a8483f8793d9c9fb3cdaa90b8194d9b812",
-    "https://deyvidCruz00.github.io/peliculas/main-FPBEAL4O.js": "e225dea3a236bd0eea24547b260d8c45098db235",
+    "https://deyvidCruz00.github.io/peliculas/main-BZD7G2HF.js": "b1c28c81359e1fc1bf85e711a2c3f609ff842430",
     "https://deyvidCruz00.github.io/peliculas/manifest.webmanifest": "cf860fa1d11ca2a8dfddc9a95b3ab0b5ff4e75c3",
     "https://deyvidCruz00.github.io/peliculas/styles-OMGDTNZM.css": "8a934e2c9ab6c93b8b37d6dfddee822e0adacbf7"
   },
