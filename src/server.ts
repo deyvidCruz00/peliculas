@@ -13,7 +13,7 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
-const cspHeader = "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'strict-dynamic' 'sha256-qOzNEiG4PyqYBKbleA3Dtj6sbBDAlSBPDcy80p0RLrI='; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.omdbapi.com; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests;";
+const cspHeader = "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'strict-dynamic' 'sha256-qOzNEiG4PyqYBKbleA3Dtj6sbBDAlSBPDcy80p0RLrI='; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.omdbapi.com https://cdn.jsdelivr.net; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests;";
 
 /**
  * Example Express Rest API endpoints can be defined here.
