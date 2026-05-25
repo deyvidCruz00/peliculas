@@ -4,14 +4,42 @@
     <p>Busca tus titulos favoritos y guarda tu coleccion local con notas y calificaciones.</p>
   </div>
 
-  <form class="peliculas__form" (ngSubmit)="buscar()">
+  <form class="peliculas__form" (ngSubmit)="buscar()" #searchForm="ngForm" novalidate>
     <div class="form-group">
       <label for="title">Titulo</label>
-      <input id="title" name="title" class="form-control" [(ngModel)]="search.title" placeholder="Ej: The Matrix">
+      <input
+        id="title"
+        name="title"
+        class="form-control"
+        [(ngModel)]="search.title"
+        placeholder="Ej: The Matrix"
+        required
+        minlength="2"
+        maxlength="80"
+        #titleModel="ngModel"
+      >
+      <div class="text-danger small" *ngIf="titleModel.invalid && (titleModel.dirty || titleModel.touched)">
+        <span *ngIf="titleModel.errors?.['required']">El titulo es obligatorio.</span>
+        <span *ngIf="titleModel.errors?.['minlength']">Minimo 2 caracteres.</span>
+        <span *ngIf="titleModel.errors?.['maxlength']">Maximo 80 caracteres.</span>
+      </div>
     </div>
     <div class="form-group">
       <label for="year">Ano</label>
-      <input id="year" name="year" class="form-control" [(ngModel)]="search.year" placeholder="Ej: 1999">
+      <input
+        id="year"
+        name="year"
+        class="form-control"
+        [(ngModel)]="search.year"
+        placeholder="Ej: 1999"
+        inputmode="numeric"
+        maxlength="4"
+        pattern="^\d{4}$"
+        #yearModel="ngModel"
+      >
+      <div class="text-danger small" *ngIf="yearModel.invalid && (yearModel.dirty || yearModel.touched)">
+        <span *ngIf="yearModel.errors?.['pattern']">El ano debe tener 4 digitos.</span>
+      </div>
     </div>
     <div class="form-group">
       <label for="type">Tipo</label>
@@ -22,7 +50,7 @@
         <option value="episode">Episodio</option>
       </select>
     </div>
-    <button class="btn btn-warning" type="submit" [disabled]="isLoading">Buscar</button>
+    <button class="btn btn-warning" type="submit" [disabled]="isLoading || searchForm.invalid">Buscar</button>
   </form>
 
   <div *ngIf="error" class="alert alert-warning">{{ error }}</div>
@@ -85,7 +113,14 @@
               </div>
             </td>
             <td>
-              <textarea *ngIf="editingId === guardada.imdbID" class="form-control" rows="2" [(ngModel)]="guardada.note" name="note-{{ guardada.imdbID }}"></textarea>
+              <textarea
+                *ngIf="editingId === guardada.imdbID"
+                class="form-control"
+                rows="2"
+                [(ngModel)]="guardada.note"
+                name="note-{{ guardada.imdbID }}"
+                maxlength="200"
+              ></textarea>
               <span *ngIf="editingId !== guardada.imdbID">{{ guardada.note || 'Sin nota' }}</span>
             </td>
             <td>

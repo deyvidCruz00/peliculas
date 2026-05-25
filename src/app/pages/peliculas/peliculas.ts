@@ -12,6 +12,11 @@ import { PeliculaBusqueda, PeliculaLocal } from '../../interfaces/pelicula.inter
   styleUrl: './peliculas.css'
 })
 export class Peliculas implements OnInit {
+  private readonly titleMinLength = 2;
+  private readonly titleMaxLength = 80;
+  private readonly noteMaxLength = 200;
+  private readonly allowedTypes = new Set(['', 'movie', 'series', 'episode']);
+
   search = {
     title: '',
     year: '',
@@ -37,8 +42,35 @@ export class Peliculas implements OnInit {
   async buscar(): Promise<void> {
     this.error = '';
 
-    if (!this.search.title.trim()) {
+    const originalType = this.search.type;
+    const cleanedTitle = this.sanitizeTitle(this.search.title);
+    const cleanedYear = this.sanitizeYear(this.search.year);
+    const cleanedType = this.sanitizeType(this.search.type);
+
+    this.search.title = cleanedTitle;
+    this.search.year = cleanedYear;
+    this.search.type = cleanedType;
+
+    if (!cleanedTitle || cleanedTitle.length < this.titleMinLength) {
       this.error = 'Ingresa un titulo para buscar.';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (cleanedTitle.length > this.titleMaxLength) {
+      this.error = `El titulo no puede superar ${this.titleMaxLength} caracteres.`;
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (cleanedYear && !this.isValidYear(cleanedYear)) {
+      this.error = 'El ano debe tener 4 digitos.';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    if (originalType.trim() && !this.allowedTypes.has(cleanedType)) {
+      this.error = 'Selecciona un tipo valido.';
       this.cdr.detectChanges();
       return;
     }
@@ -93,7 +125,12 @@ export class Peliculas implements OnInit {
   }
 
   async actualizar(item: PeliculaLocal): Promise<void> {
-    await this.peliculasLocal.upsert(item);
+    const updated: PeliculaLocal = {
+      ...item,
+      note: this.sanitizeNote(item.note),
+      rating: this.clampRating(item.rating)
+    };
+    await this.peliculasLocal.upsert(updated);
     this.editingId = null;
     await this.cargarGuardadas();
   }
@@ -106,5 +143,38 @@ export class Peliculas implements OnInit {
   private async cargarGuardadas(): Promise<void> {
     this.guardadas = await this.peliculasLocal.getAll();
     this.guardadas.sort((a, b) => b.savedAt.localeCompare(a.savedAt));
+  }
+
+  private sanitizeTitle(value: string): string {
+    return value
+      .replace(/[^a-zA-Z0-9\s:'\-&,\.]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  private sanitizeYear(value: string): string {
+    return value.replace(/\D/g, '').slice(0, 4);
+  }
+
+  private isValidYear(value: string): boolean {
+    return /^\d{4}$/.test(value);
+  }
+
+  private sanitizeType(value: string): string {
+    const cleaned = value.trim().toLowerCase();
+    return this.allowedTypes.has(cleaned) ? cleaned : '';
+  }
+
+  private sanitizeNote(value: string): string {
+    return value
+      .replace(/[\u0000-\u001F\u007F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, this.noteMaxLength);
+  }
+
+  private clampRating(value: number): number {
+    if (Number.isNaN(value)) return 3;
+    return Math.min(5, Math.max(1, Math.round(value)));
   }
 }

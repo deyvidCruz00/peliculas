@@ -5,6 +5,8 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import { existsSync, readFileSync } from 'node:fs';
+import https from 'node:https';
 import { join } from 'node:path';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -53,13 +55,31 @@ app.use((req, res, next) => {
  */
 if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4000;
-  app.listen(port, (error) => {
-    if (error) {
-      throw error;
-    }
+  const sslKeyPath = process.env['SSL_KEY_PATH'];
+  const sslCertPath = process.env['SSL_CERT_PATH'];
 
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
+  if (sslKeyPath && sslCertPath && existsSync(sslKeyPath) && existsSync(sslCertPath)) {
+    const options = {
+      key: readFileSync(sslKeyPath),
+      cert: readFileSync(sslCertPath)
+    };
+
+    https.createServer(options, app).listen(port, (error) => {
+      if (error) {
+        throw error;
+      }
+
+      console.log(`Node Express server listening on https://localhost:${port}`);
+    });
+  } else {
+    app.listen(port, (error) => {
+      if (error) {
+        throw error;
+      }
+
+      console.log(`Node Express server listening on http://localhost:${port}`);
+    });
+  }
 }
 
 /**
